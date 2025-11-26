@@ -1,0 +1,356 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Gemini Premium Services</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Myanmar:wght@400;600;800&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary-color: #4facfe;
+      --secondary-color: #00f2fe;
+      --glass-bg: rgba(255, 255, 255, 0.9);
+      --glass-border: rgba(255, 255, 255, 0.8);
+    }
+
+    body {
+      font-family: 'Noto Sans Myanmar', sans-serif;
+      margin: 0;
+      padding: 40px 20px;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #a18cd1 0%, #fbc2eb 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      box-sizing: border-box;
+    }
+
+    .main-container {
+      max-width: 1400px;
+      width: 100%;
+      display: flex;
+      gap: 30px;
+      align-items: flex-start;
+      flex-wrap: wrap;
+    }
+
+    .features-section {
+      flex: 2;
+      display: grid;
+      /* PC မှာ Auto ညှိမယ်, ဖုန်းမှာ တစ်တန်းစီဖြစ်အောင် minmax ကို 280px ပြောင်းထားသည် */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 25px;
+    }
+
+    .pricing-section {
+      flex: 1;
+      min-width: 300px; /* 320px က ဖုန်းအသေးတွေမှာ ကျပ်နေလို့ 300px လျှော့လိုက်သည် */
+      position: sticky;
+      top: 20px;
+    }
+
+    /* --- Card Styles --- */
+    .card {
+      background: var(--glass-bg);
+      backdrop-filter: blur(15px);
+      -webkit-backdrop-filter: blur(15px);
+      border: 1px solid var(--glass-border);
+      border-radius: 25px;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.08);
+      overflow: hidden;
+      transition: all 0.3s ease-in-out;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 25px 50px rgba(0, 0, 0, 0.15);
+    }
+
+    .image-wrapper {
+      height: 220px;
+      overflow: hidden;
+    }
+    .image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.6s ease;
+    }
+    .card:hover .image-wrapper img { transform: scale(1.1); }
+
+    .content { padding: 30px; }
+
+    .badge {
+      background: linear-gradient(45deg, #11998e, #38ef7d);
+      color: white;
+      padding: 8px 16px;
+      border-radius: 50px;
+      font-size: 14px;
+      font-weight: 800;
+      margin-bottom: 15px;
+      display: inline-block;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+      letter-spacing: 0.5px;
+    }
+
+    .title { 
+      font-size: 26px;
+      font-weight: 800; 
+      margin-bottom: 12px; 
+      color: #2d3436; 
+      line-height: 1.3;
+    }
+    
+    .description { 
+      font-size: 18px;
+      color: #555; 
+      line-height: 1.8;
+      margin: 0; 
+    }
+
+    /* --- Pricing Specific Styles --- */
+    .pricing-card {
+      background: #ffffff;
+      border: 3px solid rgba(255,255,255,0.5);
+      padding: 35px;
+      border-radius: 30px;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .pricing-header {
+      font-size: 28px;
+      font-weight: 800;
+      color: #2d3436;
+      margin-bottom: 30px;
+      border-bottom: 3px dashed #dfe6e9;
+      padding-bottom: 20px;
+    }
+
+    .price-option {
+      background: #f1f2f6;
+      border-radius: 20px;
+      padding: 25px;
+      margin-bottom: 25px;
+      transition: transform 0.2s;
+      border: 2px solid transparent;
+    }
+    
+    .price-option:hover {
+      transform: scale(1.03);
+      border-color: var(--primary-color);
+      background: #eefbff;
+    }
+
+    .price-tag {
+      font-size: 42px;
+      font-weight: 800;
+      color: #0984e3;
+      display: block;
+      margin: 10px 0;
+      text-shadow: 2px 2px 0px rgba(0,0,0,0.05);
+    }
+
+    .plan-name {
+      font-size: 22px;
+      font-weight: 700;
+      color: #636e72;
+    }
+
+    .feature-list {
+      list-style: none;
+      padding: 0;
+      margin: 15px 0 0 0;
+      font-size: 16px;
+      color: #636e72;
+      line-height: 1.8;
+    }
+    
+    .highlight-text {
+      color: #d35400;
+      font-weight: 800;
+      font-size: 16px;
+      background: #ffeaa7;
+      padding: 5px 10px;
+      border-radius: 8px;
+      display: inline-block;
+      margin-top: 8px;
+    }
+
+    .cta-button {
+      background: linear-gradient(45deg, #0984e3, #74b9ff);
+      color: white;
+      text-decoration: none;
+      padding: 18px 40px;
+      border-radius: 50px;
+      font-weight: bold;
+      font-size: 18px;
+      display: inline-block;
+      margin-top: 15px;
+      box-shadow: 0 10px 20px rgba(9, 132, 227, 0.3);
+      transition: all 0.3s;
+    }
+    
+    .cta-button:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 15px 30px rgba(9, 132, 227, 0.4);
+    }
+
+    /* Mobile Responsive Code (ဖုန်းအတွက် အထူးပြုပြင်ထားသောအပိုင်း) */
+    @media (max-width: 900px) {
+      body {
+        padding: 20px 10px; /* ဘေးဘောင်ချုံ့သည် */
+      }
+      
+      .main-container { 
+        flex-direction: column-reverse; /* Pricing ကို အပေါ်တင်သည် */
+        gap: 20px;
+      }
+      
+      .pricing-section { 
+        width: 100%; 
+        min-width: auto; /* အကျယ် Auto ပြန်ထားသည် */
+        position: static; /* Sticky ဖြုတ်သည် */
+      }
+
+      .pricing-card {
+        padding: 25px 15px; /* ကဒ်အတွင်း နေရာချုံ့သည် */
+      }
+
+      .pricing-header {
+        font-size: 24px; /* ခေါင်းစဉ်ဆိုဒ် လျှော့သည် */
+      }
+
+      .price-tag {
+        font-size: 36px; /* ဈေးနှုန်းဆိုဒ် လျှော့သည် */
+      }
+      
+      .features-section {
+        grid-template-columns: 1fr; /* ဖုန်းမှာ တစ်တန်းတစ်ကွက်စီပြသည် */
+      }
+
+      .card {
+        border-radius: 20px;
+      }
+
+      .image-wrapper {
+        height: 180px; /* ပုံအမြင့် လျှော့သည် */
+      }
+
+      .title {
+        font-size: 22px; /* ခေါင်းစဉ် လျှော့သည် */
+      }
+
+      .description {
+        font-size: 16px; /* စာလုံးဆိုဒ် လျှော့သည် */
+      }
+      
+      .cta-button {
+        width: 100%; /* ခလုတ်ကို အပြည့်ဆွဲဆန့်သည် */
+        box-sizing: border-box;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="main-container">
+    
+    <div class="features-section">
+      
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://storage.googleapis.com/gweb-uniblog-publish-prod/images/gemini-3_model-blog_meta-dark.width-1300.jpg" alt="Gemini 3 Pro">
+        </div>
+        <div class="content">
+          <span class="badge">AI Model</span>
+          <div class="title">Gemini 3 Pro</div>
+          <p class="description">Google ရဲ့ နောက်ဆုံးထွက် Super-Intelligent AI။ Coding, Editing နဲ့ Design လုပ်ငန်းများအတွက် အကောင်းဆုံး AI Assistant ပါ။</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://img.clevup.in/345733/PurpleEidAl-FitrSpecialSale2-1749439141869.jpeg?format=webp" alt="Google One">
+        </div>
+        <div class="content">
+          <span class="badge">Cloud Storage</span>
+          <div class="title">Google One 2TB</div>
+          <p class="description">ဓါတ်ပုံ၊ Video၊ Document တွေကို သိမ်းဆည်းနိုင်တဲ့ Premium Storage။ Data မပျောက်၊ Auto Backup စနစ်ပါဝင်။</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://www.cometapi.com/wp-content/uploads/2025/10/Veo-3.1-1024x585.webp" alt="Veo 3">
+        </div>
+        <div class="content">
+          <span class="badge">Video AI</span>
+          <div class="title">Veo 3.1 AI Video</div>
+          <p class="description">Video တွေကို အလိုအလျောက် လှပအောင် ပြုပြင်ပေးမယ့် Smart Video AI။ Creator တွေအတွက် မရှိမဖြစ်ပါ။</p>
+        </div>
+      </div>
+
+       <div class="card">
+        <div class="image-wrapper">
+          <img src="https://www.androidfaithful.com/content/images/size/w2000/2024/08/Gemini-header-image.png" alt="Gemini Live">
+        </div>
+        <div class="content">
+          <span class="badge">Voice Assistant</span>
+          <div class="title">Gemini Live</div>
+          <p class="description">လူတစ်ယောက်လို သဘာဝကျကျ စကားပြောနိုင်တဲ့ Voice AI။ စာလေ့လာခြင်း၊ အလုပ်ကိစ္စဆွေးနွေးခြင်းတို့ကို Real-Time ပြုလုပ်နိုင်။</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="image-wrapper">
+          <img src="https://images.news18.com/ibnlive/uploads/2025/09/Google-Geminis-Nano-Banana-trend-1-2025-09-7be25199787da3f1a6dc3d7a99cfdd6f.jpeg" alt="Nano Banana AI">
+        </div>
+        <div class="content">
+          <span class="badge">AI Image Gen</span>
+          <div class="title">Gemini Nano Banana</div>
+          <p class="description">3D Figurine အရုပ်ပုံစံ၊ Realistic Model တွေကို ဖန်တီးပေးနိုင်တဲ့ AI Tool။ Designer တွေအတွက် အထူးသင့်လျော်။</p>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="pricing-section">
+      <div class="pricing-card">
+        <div class="pricing-header">
+          အားလုံးပေါင်း Premium Package
+        </div>
+
+        <div class="price-option">
+          <div class="plan-name">Own Email (Private)</div>
+          <div class="price-tag">60,000 Ks</div>
+          <ul class="feature-list">
+            <li>✅ ကိုယ်ပိုင်အကောင့် သီးသန့်</li>
+            <li>✅ Full Access & Privacy</li>
+            <li class="highlight-text">✨ Google Family 5 ယောက် ထပ်ထည့်လို့ရပါမယ်</li>
+          </ul>
+        </div>
+
+        <div class="price-option">
+          <div class="plan-name">Share Account</div>
+          <div class="price-tag">30,000 Ks</div>
+          <ul class="feature-list">
+            <li>✅ ဈေးသက်သာပြီး တန်သော Plan</li>
+            <li>✅ Premium Feature အစုံရ</li>
+          </ul>
+        </div>
+
+        <a href="#" class="cta-button">Telegram မှာ၀ယ်ယူရန်</a>
+      </div>
+    </div>
+
+  </div>
+
+</body>
+</html>
